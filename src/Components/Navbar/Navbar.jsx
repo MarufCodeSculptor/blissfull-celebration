@@ -10,7 +10,7 @@ const Navbar = () => {
         <NavLink to="/services"> Services </NavLink>
       </li>
 
-      <li>
+      <li className="mx-5">
         <details>
           <summary>Dashboard</summary>
           <ul className="p-2 md:w-64">
@@ -59,7 +59,9 @@ const Navbar = () => {
               {routesLinks}
             </ul>
           </div>
-          <Link to='/' className=" text-xl">Blissfull_Celebrations</Link>
+          <Link to="/" className=" text-xl">
+            Blissfull_Celebrations
+          </Link>
         </div>
 
         <div className="navbar-center hidden lg:flex">
@@ -80,12 +82,20 @@ const Navbar = () => {
                 />
               </div>
             </div>
+
             <ul
               tabIndex={0}
-              className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+              className="mt-3 z-50 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
             >
               <li>
                 <a>Logout</a>
+              </li>
+
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+              <li>
+                <Link to="/register">Register</Link>
               </li>
             </ul>
           </div>
