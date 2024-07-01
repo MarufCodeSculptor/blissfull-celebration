@@ -1,12 +1,21 @@
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Provider/CredProvider';
-const Register = () => {
-  const { signInWithGoogle, signInWithEmailPass } = useContext(AuthContext);
+import { updateProfile } from 'firebase/auth';
+import Loading from '../Loadng/Loading';
 
+const Register = () => {
+  
+  const { signInWithGoogle, SignUpWithEmailPass, setUser, user } =
+    useContext(AuthContext);
+  const navigate = useNavigate();
+  if (!user) {
+    return <Loading />;
+  }
   // handling register => =>
   const handleRegister = async e => {
     e.preventDefault();
+    console.log('handle button is working fine ');
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
@@ -14,8 +23,14 @@ const Register = () => {
     const photourl = form.photo.value;
 
     try {
-      const { user } = await signInWithEmailPass(email, password);
-      console.log(user);
+      const { user } = await SignUpWithEmailPass(email, password);
+      await updateProfile(user, {
+        displayName: name,
+        photoURL: photourl,
+      });
+      await setUser({ ...user, displayName: name, photoURL: photourl });
+
+      navigate('/');
     } catch (err) {
       console.log(err);
     }
@@ -31,6 +46,7 @@ const Register = () => {
       console.log(err);
     }
   };
+  
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-col-reverse">
@@ -96,7 +112,7 @@ const Register = () => {
             </div>
 
             <div className="form-control mt-6">
-              <button className="btn btn-primary">Login</button>
+              <button className="btn btn-primary"> Register</button>
             </div>
 
             <div>
