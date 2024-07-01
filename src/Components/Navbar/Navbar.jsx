@@ -1,6 +1,17 @@
+import { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { AuthContext } from '../../Provider/CredProvider';
 
 const Navbar = () => {
+  const { logOut, user } = useContext(AuthContext);
+  const handleLogOut = async () => {
+    try {
+      await logOut();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const routesLinks = (
     <>
       <li>
@@ -68,35 +79,38 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{routesLinks}</ul>
         </div>
 
-        <div className="navbar-end">
+        <div className="navbar-end ">
           <div className="dropdown dropdown-end">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle avatar"
-            >
-              <div className="w-10 rounded-full">
-                <img
-                  alt="Tailwind CSS Navbar component"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                />
+            {(user && (
+              <div
+              title={user?.displayName}
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost btn-circle avatar"
+              >
+                <div className="w-10 rounded-full">
+                  <img
+                    referrerPolicy="no-referrer"
+                    alt="Tailwind CSS Navbar component"
+                    src={user?.photoURL}
+                  />
+                </div>
               </div>
-            </div>
+            )) || (
+              <Link className="text-base font-bold" to="/login">
+                Login
+              </Link>
+            )}
 
             <ul
               tabIndex={0}
               className="mt-3 z-50 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
             >
-              <li>
-                <a>Logout</a>
-              </li>
-
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
-              <li>
-                <Link to="/register">Register</Link>
-              </li>
+              {user && (
+                <li>
+                  <button onClick={handleLogOut}> log out </button>
+                </li>
+              )}
             </ul>
           </div>
         </div>

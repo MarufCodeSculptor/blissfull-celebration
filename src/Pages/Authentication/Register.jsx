@@ -5,16 +5,22 @@ import { updateProfile } from 'firebase/auth';
 import Loading from '../Loadng/Loading';
 
 const Register = () => {
-  
-  const { signInWithGoogle, SignUpWithEmailPass, setUser, user } =
-    useContext(AuthContext);
+  const {
+    signInWithGoogle,
+    SignUpWithEmailPass,
+    setUser,
+    loading,
+    setLoading,
+  } = useContext(AuthContext);  
   const navigate = useNavigate();
-  if (!user) {
+  if (loading) {
     return <Loading />;
   }
   // handling register => =>
   const handleRegister = async e => {
     e.preventDefault();
+    setLoading(true);
+
     console.log('handle button is working fine ');
     const form = e.target;
     const email = form.email.value;
@@ -46,7 +52,7 @@ const Register = () => {
       console.log(err);
     }
   };
-  
+
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-col-reverse">
