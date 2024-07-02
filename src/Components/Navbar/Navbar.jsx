@@ -1,12 +1,14 @@
 import { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../../Provider/CredProvider';
+import toast from 'react-hot-toast';
 
 const Navbar = () => {
   const { logOut, user } = useContext(AuthContext);
   const handleLogOut = async () => {
     try {
       await logOut();
+      toast.success('Log out success !')
     } catch (err) {
       console.log(err);
     }
@@ -21,32 +23,34 @@ const Navbar = () => {
         <NavLink to="/services"> Services </NavLink>
       </li>
 
-      <li className="mx-5">
-        <details>
-          <summary>Dashboard</summary>
-          <ul className="p-2 md:w-64">
-            <li>
-              <NavLink to="/add-services">Add services</NavLink>
-            </li>
-            <li>
-              <NavLink to="/manage-services">Manage services</NavLink>
-            </li>
-            <li>
-              <NavLink to="/book-services">Booked Services</NavLink>
-            </li>
-            <li>
-              <NavLink to="/services-to-do"> Services to do </NavLink>
-            </li>
-          </ul>
-        </details>
-      </li>
+      {user && (
+        <li className="mx-5 z-30" >
+          <details>
+            <summary>Dashboard</summary>
+            <ul className="p-2 md:w-64">
+              <li>
+                <NavLink to="/add-services">Add services</NavLink>
+              </li>
+              <li>
+                <NavLink to="/manage-services">Manage services</NavLink>
+              </li>
+              <li>
+                <NavLink to="/book-services">Booked Services</NavLink>
+              </li>
+              <li>
+                <NavLink to="/services-to-do"> Services to do </NavLink>
+              </li>
+            </ul>
+          </details>
+        </li>
+      )}
     </>
   );
   return (
     <div>
       <div className="navbar bg-base-100">
         <div className="navbar-start">
-          <div className="dropdown">
+          <div className="dropdown z-40">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -83,7 +87,7 @@ const Navbar = () => {
           <div className="dropdown dropdown-end">
             {(user && (
               <div
-              title={user?.displayName}
+                title={user?.displayName}
                 tabIndex={0}
                 role="button"
                 className="btn btn-ghost btn-circle avatar"

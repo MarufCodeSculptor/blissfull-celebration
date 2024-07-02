@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../Provider/CredProvider';
 import { Link, useNavigate } from 'react-router-dom';
 import Loading from '../Loadng/Loading';
+import toast from 'react-hot-toast';
 
 const Login = () => {
   const { signInWithGoogle, loginWithEmailPass, loading, setLoading } =
@@ -18,6 +19,7 @@ const Login = () => {
     try {
       await loginWithEmailPass(email, password);
       navigate('/');
+      toast.success('Login Success');
     } catch (err) {
       console.log(err);
     }
@@ -26,6 +28,7 @@ const Login = () => {
     try {
       await signInWithGoogle();
       navigate('/');
+      toast.success('Sign In  Success');
     } catch (err) {
       console.log(err);
     }

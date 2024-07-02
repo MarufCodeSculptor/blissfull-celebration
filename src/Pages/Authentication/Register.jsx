@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Provider/CredProvider';
 import { updateProfile } from 'firebase/auth';
 import Loading from '../Loadng/Loading';
+import toast from 'react-hot-toast';
 
 const Register = () => {
   const {
@@ -11,7 +12,7 @@ const Register = () => {
     setUser,
     loading,
     setLoading,
-  } = useContext(AuthContext);  
+  } = useContext(AuthContext);
   const navigate = useNavigate();
   if (loading) {
     return <Loading />;
@@ -35,8 +36,10 @@ const Register = () => {
         photoURL: photourl,
       });
       await setUser({ ...user, displayName: name, photoURL: photourl });
-
       navigate('/');
+      toast.success('Register Success');
+
+
     } catch (err) {
       console.log(err);
     }
@@ -46,8 +49,9 @@ const Register = () => {
 
   const handleGoogleSignIn = async () => {
     try {
-      const { user } = await signInWithGoogle();
-      console.log(user);
+     await signInWithGoogle();
+     navigate('/')
+     toast.success('SignIn Success'); 
     } catch (err) {
       console.log(err);
     }
