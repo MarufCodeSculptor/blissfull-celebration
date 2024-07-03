@@ -10,6 +10,7 @@ import AllServices from '../Pages/All-Services/AllServices';
 import Login from '../Pages/Authentication/Login';
 import Register from '../Pages/Authentication/Register';
 import NotFound from '../Pages/ NotFound/NotFound';
+import ServicesDetails from '../Pages/Private/ServicesDetails/ServicesDetails';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
         element: <AllServices />,
       },
       // private routes =>
+      {
+        path: '/service/:id',
+        element:<ServicesDetails/>,
+      },
       {
         path: '/add-services',
         element: <Addservices></Addservices>,

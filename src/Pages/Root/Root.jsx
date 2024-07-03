@@ -8,8 +8,8 @@ const Root = () => {
       <div className="max-w-6xl mx-auto">
         <Navbar />
       </div>
-      <div className='min-h-[calc(100vh-67px)] flex items-center justify-center'>
-        <Outlet />
+      <div className='min-h-[calc(100vh-67px)] max-w-6xl mx-auto'>
+        <Outlet />  
       </div>
 
       <div>

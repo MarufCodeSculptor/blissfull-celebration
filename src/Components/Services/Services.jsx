@@ -1,12 +1,28 @@
 import { useEffect, useState } from 'react';
-import server from '../../Hooks/AxiosBase/AxiosBase';
 import ServicesCard from './ServicesCard';
+import UseAxiosSecure from '../../Hooks/AxiosBase/UseAxiosSecure';
 
 const Services = () => {
   const [services, setServices] = useState([]);
+
+  const axiosSecure = UseAxiosSecure();
+  console.log(axiosSecure);
+
+
+  
   useEffect(() => {
-    server.get('/services').then(res => setServices(res.data));
-  }, []);
+    try {
+      const getData = async () => {
+        const { data } = await axiosSecure.get('/services');
+        await setServices(data);
+      };
+      getData();
+    } catch (error) {
+      console.log(error);
+    }
+  },[]);
+
+
 
   return (
     <div>
@@ -29,7 +45,7 @@ const Services = () => {
       {/* all services container */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-20">
         {services.map(service => (
-          <ServicesCard key={service._id} service={service}  ></ServicesCard>
+          <ServicesCard key={service._id} service={service}></ServicesCard>
         ))}
       </div>
     </div>

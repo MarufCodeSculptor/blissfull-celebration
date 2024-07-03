@@ -1,9 +1,14 @@
 /* eslint-disable react/prop-types */
 const ServicesCard = ({ service }) => {
-  
-  
-  const {imageURL ,serviceName,price,description,providerImage,providerName}=service;
-  
+  const {
+    imageURL,
+    serviceName,
+    price,
+    description,
+    providerImage,
+    providerName,
+  } = service;
+
   return (
     <div className="border rounded-lg shadow-lg p-4">
       <img
