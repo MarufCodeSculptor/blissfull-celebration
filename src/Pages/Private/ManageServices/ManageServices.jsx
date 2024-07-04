@@ -27,6 +27,7 @@ const ManageServices = () => {
   } = useQuery({
     queryFn: !loading && getData,
     queryKey: ['services-data'],
+    enabled: !!user,
   });
 
   // getting modal data=>=>=>=>=>=>
@@ -79,6 +80,7 @@ const ManageServices = () => {
       const { data } = await axiosSecure.patch(`/service/${_id}`, updateDoc);
       if (data.modifiedCount > 0) {
         refetch();
+
         onCloseModal();
         toast.success('update success');
       } else {
@@ -93,8 +95,10 @@ const ManageServices = () => {
     try {
       const { data } = await axiosSecure.delete(`/service/${id}`);
       if (data.deletedCount > 0) {
-        toast.success('delete success');
         refetch();
+        toast.dismiss()
+        toast.success('delete success');
+        
       }
     } catch (err) {
       console.log(err.message);

@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
-const ManageServicesCard = ({ item, onOpenModal, setTheId ,handleDelete}) => {
+import toast from 'react-hot-toast';
+import ToasterConfirm from '../../ToasterConfirm/ToasterConfirm';
+const ManageServicesCard = ({ item, onOpenModal, setTheId, handleDelete }) => {
   const {
     _id,
     imageURL,
@@ -13,6 +15,21 @@ const ManageServicesCard = ({ item, onOpenModal, setTheId ,handleDelete}) => {
   const handleModal = async id => {
     await setTheId(id);
     onOpenModal();
+  };
+
+  const deleteOperation = id => {
+    toast(() => <ToasterConfirm onConfirm={onConfirm} onCancel={onCancel} />, {
+      duration: Infinity,
+    });
+    const onConfirm = async () => {
+      await handleDelete(id);
+    };
+
+    const onCancel = () => {
+      // Cancel delete action
+      console.log('Delete action cancelled');
+      toast.dismiss();
+    };
   };
 
   return (
@@ -56,8 +73,11 @@ const ManageServicesCard = ({ item, onOpenModal, setTheId ,handleDelete}) => {
       </td>
 
       <th>
-        <button onClick={()=> handleDelete(_id)}  className="btn"> Delete </button>
+        <button onClick={() => deleteOperation(_id)} className="btn">
+          Delete
+        </button>
       </th>
+      <div></div>
     </tr>
   );
 };
@@ -65,6 +85,6 @@ ManageServicesCard.propTypes = {
   item: PropTypes.object.isRequired,
   onOpenModal: PropTypes.func.isRequired,
   setTheId: PropTypes.func.isRequired,
-  handleDelete:PropTypes.func.isRequired
+  handleDelete: PropTypes.func.isRequired,
 };
 export default ManageServicesCard;
