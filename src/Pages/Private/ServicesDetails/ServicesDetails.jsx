@@ -1,4 +1,4 @@
-import { focusManager, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import UseAxiosSecure from '../../../Hooks/AxiosBase/UseAxiosSecure';
 import { useParams } from 'react-router-dom';
 import Loading from '../../Loadng/Loading';
@@ -6,7 +6,7 @@ import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../../Provider/CredProvider';
-
+import toast from 'react-hot-toast';
 
 const ServicesDetails = () => {
   const { user } = useContext(AuthContext);
@@ -51,31 +51,34 @@ const ServicesDetails = () => {
   } = data;
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
-  const buyerName=user?.displayName;
-  const buyerEmail=user?.email;
-  const buyerImage=user?.photoURL;
+  const buyerName = user?.displayName;
+  const buyerEmail = user?.email;
+  const buyerImage = user?.photoURL;
 
-
-  const handlePurchase =(e)=>{
+  const handlePurchase = async e => {
     e.preventDefault();
     const form = e.target;
     console.log(form);
-    const date=form.date.value;
-    const comment=form.comment.value;
-    const status= 'pending';
+    const date = form.date.value;
+    const comment = form.comment.value;
+    const status = 'pending';
 
-    const purchaseInfo= {
+    const purchaseInfo = {
       date,
       comment,
       status,
-      provider:{providerEmail,providerName,providerImage},
-      buyer:{buyerName,buyerEmail,buyerImage}
-    }
-   
-  console.log(purchaseInfo);
+      provider: { providerEmail, providerName, providerImage },
+      buyer: { buyerName, buyerEmail, buyerImage },
+    };
+    try {
+      const {data} = await axiosSecure.post('/booked-services', purchaseInfo);
+     await data?.insertedId && toast.success('posted successfully')
+     onCloseModal();
 
-   
-  }
+    } catch (error) {
+      toast.error(error?.message);
+    }
+  };
 
   return (
     <>
@@ -224,8 +227,8 @@ const ServicesDetails = () => {
                   <label className="label">
                     <span className="font-bold"> Your comments </span>
                   </label>
-                  <textarea 
-                  name='comment'
+                  <textarea
+                    name="comment"
                     className="textarea textarea-primary"
                     placeholder="message"
                   ></textarea>
@@ -233,7 +236,7 @@ const ServicesDetails = () => {
               </div>
 
               <div className="form-control mt-6">
-                <button  className="btn btn-primary"> Purchase </button>
+                <button className="btn btn-primary"> Purchase </button>
               </div>
             </form>
           </div>
