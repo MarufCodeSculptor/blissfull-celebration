@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { focusManager, useQuery } from '@tanstack/react-query';
 import UseAxiosSecure from '../../../Hooks/AxiosBase/UseAxiosSecure';
 import { useParams } from 'react-router-dom';
 import Loading from '../../Loadng/Loading';
@@ -6,6 +6,7 @@ import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../../Provider/CredProvider';
+
 
 const ServicesDetails = () => {
   const { user } = useContext(AuthContext);
@@ -48,9 +49,34 @@ const ServicesDetails = () => {
     providerImage,
     providerName,
   } = data;
-
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
+  const buyerName=user?.displayName;
+  const buyerEmail=user?.email;
+  const buyerImage=user?.photoURL;
+
+
+  const handlePurchase =(e)=>{
+    e.preventDefault();
+    const form = e.target;
+    console.log(form);
+    const date=form.date.value;
+    const comment=form.comment.value;
+    const status= 'pending';
+
+    const purchaseInfo= {
+      date,
+      comment,
+      status,
+      provider:{providerEmail,providerName,providerImage},
+      buyer:{buyerName,buyerEmail,buyerImage}
+    }
+   
+  console.log(purchaseInfo);
+
+   
+  }
+
   return (
     <>
       <div>
@@ -152,7 +178,7 @@ const ServicesDetails = () => {
               </div>
             </div>
 
-            <form className="md:w-1/2  p-5">
+            <form onSubmit={handlePurchase} className="md:w-1/2  p-5">
               <div>
                 <h2 className="text-xl capitalize font-bold">
                   provider information
@@ -180,7 +206,7 @@ const ServicesDetails = () => {
                   <span>{user?.displayName}</span>
                 </div>
                 <div>
-                  <span className='text-xs'>{user?.email}</span>
+                  <span className="text-xs">{user?.email}</span>
                 </div>
 
                 <div className="form-control">
@@ -198,7 +224,8 @@ const ServicesDetails = () => {
                   <label className="label">
                     <span className="font-bold"> Your comments </span>
                   </label>
-                  <textarea
+                  <textarea 
+                  name='comment'
                     className="textarea textarea-primary"
                     placeholder="message"
                   ></textarea>
@@ -206,7 +233,7 @@ const ServicesDetails = () => {
               </div>
 
               <div className="form-control mt-6">
-                <button className="btn btn-primary"> Purchase </button>
+                <button  className="btn btn-primary"> Purchase </button>
               </div>
             </form>
           </div>
