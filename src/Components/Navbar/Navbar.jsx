@@ -24,7 +24,7 @@ const Navbar = () => {
       </li>
 
       {user && (
-        <li className="mx-5 z-30" >
+        <li className="mx-5 z-10 " >
           <details>
             <summary>Dashboard</summary>
             <ul className="p-2 md:w-64">
@@ -50,7 +50,7 @@ const Navbar = () => {
     <div>
       <div className="navbar bg-base-100">
         <div className="navbar-start">
-          <div className="dropdown z-40">
+          <div className="dropdown z-10">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

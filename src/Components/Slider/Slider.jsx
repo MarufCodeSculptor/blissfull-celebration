@@ -18,7 +18,7 @@ const Slider = () => {
   }, []);
 
   return (
-    <div className="min-h-96 border-2">
+    <div className="min-h-96 border-2 z-0">
       <Swiper
         modules={[Navigation, Pagination, Scrollbar, A11y]}
         spaceBetween={50}

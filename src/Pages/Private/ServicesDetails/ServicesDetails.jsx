@@ -2,22 +2,17 @@ import { useQuery } from '@tanstack/react-query';
 import UseAxiosSecure from '../../../Hooks/AxiosBase/UseAxiosSecure';
 import { useParams } from 'react-router-dom';
 import Loading from '../../Loadng/Loading';
-import Modal from 'react-modal';
-import { useState } from 'react';
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-  },
-};
+import 'react-responsive-modal/styles.css';
+import { Modal } from 'react-responsive-modal';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../../../Provider/CredProvider';
+
 const ServicesDetails = () => {
+  const { user } = useContext(AuthContext);
+  console.log(user);
   const axiosSecure = UseAxiosSecure();
   const params = useParams();
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   // -------------------------------------------------------------------------------------
   const { data, error, isLoading } = useQuery({
@@ -28,13 +23,6 @@ const ServicesDetails = () => {
     queryKey: ['service'],
   });
   // ---------------------------------------------------------------------------------
-
-  function openModal() {
-    setIsOpen(true);
-  }
-  function closeModal() {
-    setIsOpen(false);
-  }
 
   if (isLoading) {
     return <Loading />;
@@ -61,11 +49,13 @@ const ServicesDetails = () => {
     providerName,
   } = data;
 
+  const onOpenModal = () => setOpen(true);
+  const onCloseModal = () => setOpen(false);
   return (
     <>
       <div>
         {/* -----------------------section heading ------------------ */}
-        <div className="text-center border  p-10">
+        <div className="text-center border p-10">
           <h2 className="text-2xl font-bold">Service Overview</h2>
           <p className="text-gray-900">
             Welcome to our comprehensive service details! Here, you will find
@@ -130,9 +120,8 @@ const ServicesDetails = () => {
                     </div>
                   </div>
 
-                  <button className=" btn" onClick={openModal}>
-                    {' '}
-                    Book now{' '}
+                  <button className="btn" onClick={onOpenModal}>
+                    Book now
                   </button>
                 </div>
               </div>
@@ -143,21 +132,84 @@ const ServicesDetails = () => {
         </div>
       </div>
       <div>
-        <Modal
-          isOpen={modalIsOpen}
-          onRequestClose={closeModal}
-          style={customStyles}
-          contentLabel="Example Modal"
-        >
-          <button onClick={closeModal}>close</button>
-          <div>I am a modal</div>
-          <form>
-            <input />
-            <button>tab navigation</button>
-            <button>stays</button>
-            <button>inside</button>
-            <button>the modal</button>
-          </form>
+        <Modal open={open} onClose={onCloseModal} center>
+          <h2 className="text-center text-xl my-5 capitalize">
+            book your
+            <span className="font-bold capitalize text-blue-500 mx-2">
+              {serviceName}
+            </span>
+            today
+          </h2>
+          <div className="flex flex-col md:flex-row gap-2">
+            <div className="md:w-1/2  p-5 ">
+              <div className="flex flex-col items-center justify-center">
+                <img className="rounded-lg w-64 h-64" src={imageURL} alt="" />
+                <div className="font-bold my-2">
+                  <p className="text-sm"> {price}$ </p>
+                  <h2 className="text-xl text-blue-700">{serviceName}</h2>
+                  <p>ID:{_id}</p>
+                </div>
+              </div>
+            </div>
+
+            <form className="md:w-1/2  p-5">
+              <div>
+                <h2 className="text-xl capitalize font-bold">
+                  provider information
+                </h2>
+                <div className="flex items-enter justify-start gap-2 my-2">
+                  <div className="avatar">
+                    <div className="w-12 rounded-full">
+                      <img src={providerImage} />
+                    </div>
+                  </div>
+                  <div>
+                    <h2 className="text-base">{providerName}</h2>
+                    <span className="text-xs"> {providerEmail} </span>
+                  </div>
+                </div>
+              </div>
+
+              <hr className="border border-gray-800" />
+              <div className="my-5">
+                <h2 className="text-lg font-bold capitalize">
+                  your informaion
+                </h2>
+
+                <div>
+                  <span>{user?.displayName}</span>
+                </div>
+                <div>
+                  <span className='text-xs'>{user?.email}</span>
+                </div>
+
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text"> Date</span>
+                  </label>
+                  <input
+                    type="date"
+                    name="date"
+                    className="input input-bordered"
+                    required
+                  />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="font-bold"> Your comments </span>
+                  </label>
+                  <textarea
+                    className="textarea textarea-primary"
+                    placeholder="message"
+                  ></textarea>
+                </div>
+              </div>
+
+              <div className="form-control mt-6">
+                <button className="btn btn-primary"> Purchase </button>
+              </div>
+            </form>
+          </div>
         </Modal>
       </div>
     </>
