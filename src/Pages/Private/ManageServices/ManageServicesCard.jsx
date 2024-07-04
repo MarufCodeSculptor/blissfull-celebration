@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-const ManageServicesCard = ({ item }) => {
+const ManageServicesCard = ({ item, onOpenModal }) => {
   const {
     imageURL,
     serviceName,
@@ -42,8 +42,9 @@ const ManageServicesCard = ({ item }) => {
       <td>
         <span className="p-5 ">20</span>
       </td>
+
       <td>
-        <button className="btn"> Update </button>
+        <button onClick={onOpenModal} className="btn"> Update </button>
       </td>
 
       <th>
@@ -54,5 +55,6 @@ const ManageServicesCard = ({ item }) => {
 };
 ManageServicesCard.propTypes = {
   item: PropTypes.object.isRequired,
+  onOpenModal: PropTypes.func.isRequired,
 };
 export default ManageServicesCard;
