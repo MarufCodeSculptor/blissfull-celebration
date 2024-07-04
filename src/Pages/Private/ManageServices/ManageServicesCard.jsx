@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
-const ManageServicesCard = ({ item, onOpenModal }) => {
+const ManageServicesCard = ({ item, onOpenModal, setTheId ,handleDelete}) => {
   const {
+    _id,
     imageURL,
     serviceName,
     price,
@@ -8,6 +9,11 @@ const ManageServicesCard = ({ item, onOpenModal }) => {
     providerImage,
     providerName,
   } = item;
+
+  const handleModal = async id => {
+    await setTheId(id);
+    onOpenModal();
+  };
 
   return (
     <tr>
@@ -44,11 +50,13 @@ const ManageServicesCard = ({ item, onOpenModal }) => {
       </td>
 
       <td>
-        <button onClick={onOpenModal} className="btn"> Update </button>
+        <button onClick={() => handleModal(_id)} className="btn">
+          Update
+        </button>
       </td>
 
       <th>
-        <button className="btn"> Delete </button>
+        <button onClick={()=> handleDelete(_id)}  className="btn"> Delete </button>
       </th>
     </tr>
   );
@@ -56,5 +64,7 @@ const ManageServicesCard = ({ item, onOpenModal }) => {
 ManageServicesCard.propTypes = {
   item: PropTypes.object.isRequired,
   onOpenModal: PropTypes.func.isRequired,
+  setTheId: PropTypes.func.isRequired,
+  handleDelete:PropTypes.func.isRequired
 };
 export default ManageServicesCard;
