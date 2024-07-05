@@ -4,8 +4,10 @@ import { useContext } from 'react';
 import { AuthContext } from '../../../Provider/CredProvider';
 import UseAxiosSecure from '../../../Hooks/AxiosBase/UseAxiosSecure';
 import BookedCard from './BookedCard';
+import useTittle from '../../../Hooks/useTitle/useTittle';
 
 const BookedServices = () => {
+  useTittle('(Booked-services)  Blissfull_celebration')
   const { user } = useContext(AuthContext);
   const axiosSecure = UseAxiosSecure();
 
@@ -38,6 +40,7 @@ const BookedServices = () => {
                 <th>Service info</th>
                 <th>Your  Data</th>
                 <th>Provider's Data</th>
+                <th> Date</th>
                 <th> Status</th>
                 <th>Booking Data</th>
               </tr>

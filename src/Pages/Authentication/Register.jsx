@@ -4,8 +4,10 @@ import { AuthContext } from '../../Provider/CredProvider';
 import { updateProfile } from 'firebase/auth';
 import Loading from '../Loadng/Loading';
 import toast from 'react-hot-toast';
+import useTittle from '../../Hooks/useTitle/useTittle';
 
 const Register = () => {
+  useTittle('(Register) -Blissfull_celebration')
   const {
     signInWithGoogle,
     SignUpWithEmailPass,

@@ -3,8 +3,10 @@ import { AuthContext } from '../../Provider/CredProvider';
 import { Link, useNavigate } from 'react-router-dom';
 import Loading from '../Loadng/Loading';
 import toast from 'react-hot-toast';
+import useTittle from '../../Hooks/useTitle/useTittle';
 
 const Login = () => {
+  useTittle('(Login)-Blissfull_celebration');
   const { signInWithGoogle, loginWithEmailPass, loading, setLoading } =
     useContext(AuthContext);
   const navigate = useNavigate();
@@ -36,6 +38,7 @@ const Login = () => {
   if (loading) {
     return <Loading></Loading>;
   }
+  
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-col-reverse">

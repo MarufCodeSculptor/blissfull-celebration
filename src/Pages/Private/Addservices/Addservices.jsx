@@ -2,8 +2,10 @@ import { useContext } from 'react';
 import { AuthContext } from '../../../Provider/CredProvider';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import useTittle from '../../../Hooks/useTitle/useTittle';
 
 const Addservices = () => {
+  useTittle('Add-Servcies  Blissfull_celebration ')
   const { user } = useContext(AuthContext);
   const handleAdd = async e => {
     e.preventDefault();

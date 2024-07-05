@@ -7,8 +7,10 @@ import { AuthContext } from '../../../Provider/CredProvider';
 import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
 import toast from 'react-hot-toast';
+import useTittle from '../../../Hooks/useTitle/useTittle';
 
 const ManageServices = () => {
+  useTittle('(Manage-Services)  Blissfull_celebration')
   const { user, loading } = useContext(AuthContext);
   const axiosSecure = UseAxiosSecure();
   //modals data=> =>

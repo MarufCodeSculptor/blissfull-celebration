@@ -1,8 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import UseAxiosSecure from '../../Hooks/AxiosBase/UseAxiosSecure';
 import AllServicesCard from './AllServicesCard';
+import useTittle from '../../Hooks/useTitle/useTittle';
 
 const AllServices = () => {
+  useTittle('(All-Services)  Blissfull_celebration')
   const axiosSecure = UseAxiosSecure();
   const { data, error, isLoading } = useQuery({
     queryFn: async () => {

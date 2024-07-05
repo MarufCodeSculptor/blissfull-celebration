@@ -7,8 +7,10 @@ import { Modal } from 'react-responsive-modal';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../../Provider/CredProvider';
 import toast from 'react-hot-toast';
+import useTittle from '../../../Hooks/useTitle/useTittle';
 
 const ServicesDetails = () => {
+  useTittle('(Service-Details) Blissfull_celebration');
   const { user } = useContext(AuthContext);
   console.log(user);
   const axiosSecure = UseAxiosSecure();
@@ -64,6 +66,11 @@ const ServicesDetails = () => {
     const status = 'pending';
 
     const purchaseInfo = {
+      serviceImg:imageURL,
+      price,
+      serviceName,
+
+      
       date,
       comment,
       status,

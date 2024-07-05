@@ -3,24 +3,30 @@ const BookedCard = ({ item }) => {
   const {
     date,
     status,
+    serviceImg,
+    price,
+    serviceName,
     provider: { providerEmail, providerName, providerImage },
     buyer: { buyerName, buyerEmail, buyerImage },
   } = item;
 
-  
   return (
     <tr>
       <td>
         <div className="flex items-center justify-start gap-2">
-          <span> service photo </span>
-          <div>
-            <span> service name   </span> <br />
-            <span> servie price  </span>
+          <div className="avatar">
+            <div className="mask mask-hexagon w-12">
+              <img src={serviceImg} />
+            </div>
+          </div>
+          <div >
+            <span className='text-sm font-bold'> {serviceName} </span> <br />
+            <span className='text-xs font-light'> {price}$ </span>
           </div>
         </div>
       </td>
 
-{/* buyer data => =>  */}
+      {/* buyer data => =>  */}
       <td>
         <div className="flex items-center gap-3">
           <div className="avatar">
@@ -35,8 +41,7 @@ const BookedCard = ({ item }) => {
         </div>
       </td>
 
-
-   {/* provider data =>  */}
+      {/* provider data =>  */}
       <td>
         <div className="flex items-center gap-3">
           <div className="avatar">
@@ -50,13 +55,18 @@ const BookedCard = ({ item }) => {
           </div>
         </div>
       </td>
+      {/* status */}
       <th>
-        <span className="bg-pink-300 px-3 py-2 rounded text-white ">
+        <span className="text-xs font-light">{date}</span>
+      </th>
+      <th>
+        <span className=" p-3 text-gray-600 ">
           {status}
         </span>
       </th>
+      {/*  action button  */}
       <td>
-        <button className="btn btn-success"> Complete </button>
+        <button className="btn bg-blue-300 p-2 rounded "> Complete </button>
       </td>
     </tr>
   );
