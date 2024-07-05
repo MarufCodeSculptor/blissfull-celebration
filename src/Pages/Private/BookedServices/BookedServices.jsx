@@ -1,10 +1,31 @@
+/* eslint-disable no-unused-vars */
+import { useQuery } from '@tanstack/react-query';
+import { useContext } from 'react';
+import { AuthContext } from '../../../Provider/CredProvider';
+import UseAxiosSecure from '../../../Hooks/AxiosBase/UseAxiosSecure';
+import BookedCard from './BookedCard';
+
 const BookedServices = () => {
+  const { user } = useContext(AuthContext);
+  const axiosSecure = UseAxiosSecure();
+
+  const getBookedData = async () => {
+    const { data } = await axiosSecure.get(`/booked-data?email=${user?.email}`);
+    return data;
+  };
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['booked-data', user],
+    queryFn: () => getBookedData(),
+    enabled: !!user,
+  });
+
+  console.log('bookings data', data);
+
   return (
     <>
       <div>
         <h2 className="text-4xl font-bold text-center text-blue-500 capitalize">
-          {' '}
-          Your booked services{' '}
+          Your booked services
         </h2>
       </div>
 
@@ -15,68 +36,16 @@ const BookedServices = () => {
             <thead>
               <tr>
                 <th>Service info</th>
-                <th>Customer's Data</th>
+                <th>Your  Data</th>
                 <th>Provider's Data</th>
                 <th> Status</th>
                 <th>Booking Data</th>
               </tr>
             </thead>
             <tbody>
-              {/* row 1 */}
-              <tr>
-                <td>
-                  <div className="flex items-center justify-start gap-2"> 
-                    <span>image</span> 
-                   <div>
-                   <span>name</span>  <br />
-                   <span>price</span>
-                   </div>
-                  </div>
-                </td>
-
-                <td>
-                  <div className="flex items-center gap-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle h-12 w-12">
-                        <img
-                          src="https://img.daisyui.com/tailwind-css-component-profile-2@56w.png"
-                          alt="Avatar Tailwind CSS Component"
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="font-bold">Hart Hagerty</div>
-                      <div className="text-sm opacity-50">United States</div>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <div className="flex items-center gap-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle h-12 w-12">
-                        <img
-                          src="https://img.daisyui.com/tailwind-css-component-profile-2@56w.png"
-                          alt="Avatar Tailwind CSS Component"
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="font-bold">Hart Hagerty</div>
-                      <div className="text-sm opacity-50">United States</div>
-                    </div>
-                  </div>
-                </td>
-
-                <th>
-                  <span className="bg-pink-300 px-3 py-2 rounded text-white ">
-                    pending
-                  </span>
-                </th>
-                <td>
-                  {' '}
-                  <button className="btn btn-success"> Complete </button>{' '}
-                </td>
-              </tr>
+              {data?.map(item => (
+                <BookedCard item={item} key={item._id} />
+              ))}
             </tbody>
           </table>
         </div>

@@ -16,7 +16,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Root></Root>,
-    errorElement:<NotFound></NotFound>,
+    errorElement: <NotFound></NotFound>,
     children: [
       {
         path: '/',
@@ -37,7 +37,7 @@ const router = createBrowserRouter([
       // private routes =>
       {
         path: '/service/:id',
-        element:<ServicesDetails/>,
+        element: <ServicesDetails />,
       },
       {
         path: '/add-services',
