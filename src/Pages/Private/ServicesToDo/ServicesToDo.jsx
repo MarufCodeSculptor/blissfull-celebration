@@ -17,7 +17,7 @@ const ServicesToDo = () => {
     );
     return data;
   };
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error,refetch } = useQuery({
     queryKey: ['booked-data', user],
     queryFn: () => getBookedData(),
     enabled: !!user,
@@ -50,7 +50,7 @@ const ServicesToDo = () => {
 
             <tbody>
               {data?.map(item => (
-                <ToDoRow item={item} key={item._id} />
+                <ToDoRow item={item} key={item._id}  refetch={refetch} />
               ))}
             </tbody>
           </table>

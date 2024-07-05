@@ -1,10 +1,14 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import UseAxiosSecure from '../../../Hooks/AxiosBase/UseAxiosSecure';
 
-const ToDoRow = ({ item }) => {
+const ToDoRow = ({ item ,refetch}) => {
+  const axiosSescure = UseAxiosSecure();
+
   const [Thestatus, setStatus] = useState('');
 
   const {
+    _id,
     date,
     status,
     serviceImg,
@@ -14,9 +18,19 @@ const ToDoRow = ({ item }) => {
     buyer: { buyerName, buyerEmail, buyerImage },
   } = item;
 
-  const handleUpdate = () => {
-    console.log('Selected status:', Thestatus);
-    // You can now access the selected value and perform any actions you need
+  const handleUpdate = async () => {
+    //     make updatedoc
+    const updateDoc = { status: Thestatus };
+    try {
+      const { data } = await axiosSescure.patch(
+        `/booked-services/${_id}`,
+        updateDoc
+      );
+      refetch();
+      console.log(data, 'update response');
+    } catch (err) {
+      console.log(err?.message);
+    }
   };
 
   const handleStatus = e => {
@@ -75,7 +89,7 @@ const ToDoRow = ({ item }) => {
         <select
           defaultValue={status}
           onChange={handleStatus}
-          className="select select-bordered w-full min-w-32"
+          className="select select-accent w-full min-w-32"
         >
           <option value="">Select status</option>
           <option value="pending">Pending</option>
@@ -96,5 +110,6 @@ const ToDoRow = ({ item }) => {
 
 ToDoRow.propTypes = {
   item: PropTypes.object.isRequired,
+  refetch:PropTypes.func.isRequired
 };
 export default ToDoRow;
