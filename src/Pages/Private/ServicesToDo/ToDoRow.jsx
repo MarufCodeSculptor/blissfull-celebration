@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import UseAxiosSecure from '../../../Hooks/AxiosBase/UseAxiosSecure';
+import toast from 'react-hot-toast'
 
 const ToDoRow = ({ item ,refetch}) => {
   const axiosSescure = UseAxiosSecure();
@@ -27,7 +28,8 @@ const ToDoRow = ({ item ,refetch}) => {
         updateDoc
       );
       refetch();
-      console.log(data, 'update response');
+      toast.success('Status Updated')
+      
     } catch (err) {
       console.log(err?.message);
     }

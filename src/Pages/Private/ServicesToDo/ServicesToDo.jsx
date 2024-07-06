@@ -17,13 +17,23 @@ const ServicesToDo = () => {
     );
     return data;
   };
-  const { data, isLoading, error,refetch } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: ['booked-data', user],
     queryFn: () => getBookedData(),
     enabled: !!user,
   });
 
   console.log('to do  data', data);
+
+  if (data?.length === 0) {
+    return (
+      <>
+        <div className="text-3xl font-bold text-center min-h-[calc(100vh-70px)] flex items-center justify-center ">
+          <h2> No data available </h2>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
@@ -50,7 +60,7 @@ const ServicesToDo = () => {
 
             <tbody>
               {data?.map(item => (
-                <ToDoRow item={item} key={item._id}  refetch={refetch} />
+                <ToDoRow item={item} key={item._id} refetch={refetch} />
               ))}
             </tbody>
           </table>

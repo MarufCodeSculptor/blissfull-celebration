@@ -4,7 +4,7 @@ import Footer from '../../Components/Footer/Footer';
 
 const Root = () => {
   return (
-    <div className="merriweather">
+    <div className="font-montSerrat">
       <div className="max-w-6xl mx-auto">
         <Navbar />
       </div>

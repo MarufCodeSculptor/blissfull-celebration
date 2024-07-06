@@ -108,6 +108,15 @@ const ManageServices = () => {
   };
 
   if (serviceLoading) <Loading />;
+  if (serviceData?.length === 0) {
+    return (
+      <>
+        <div className="text-3xl font-bold text-center min-h-[calc(100vh-70px)] flex items-center justify-center ">
+          <h2> No data available </h2>
+        </div>
+      </>
+    );
+  }
   return (
     <>
       <div>
