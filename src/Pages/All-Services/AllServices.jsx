@@ -20,26 +20,39 @@ const AllServices = () => {
     queryKey: ['services'],
   });
 
-  
-
   if (isLoading) {
     return (
-        <div className='min-h-[calc(100vh-70px)] flex items-center justify-center' >
-           <BounceLoader
-        color={'blue'}
-        loading={isLoading}
-        // cssOverride={CSSProperties}
-        size={150}
-        aria-label="Loading Spinner"
-        data-testid="loader"
-      />
-        </div>
+      <div className="min-h-[calc(100vh-70px)] flex items-center justify-center">
+        <BounceLoader
+          color={'blue'}
+          loading={isLoading}
+          // cssOverride={CSSProperties}
+          size={150}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div>
+        <h2> error : {error.message}</h2>
+      </div>
     );
   }
   return (
     <>
       <div>
-        <h2 className="capitalize font-bold">all services </h2>
+        <div className='text-center'>
+          <h2 className='text-2xl  font-bold my-2'>Our Comprehensive Event Management Services</h2>
+          <p>
+            Explore our wide range of event management services designed to make
+            your special occasions memorable and seamless. From corporate events
+            to personal celebrations, we cater to all your needs with
+            professionalism and creativity
+          </p>
+        </div>
 
         {/* data showing table here =>  */}
         <div className="flex items-center justify-center flex-col my-5">
