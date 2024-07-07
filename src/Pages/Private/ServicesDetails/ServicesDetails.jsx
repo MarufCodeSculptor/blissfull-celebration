@@ -12,7 +12,6 @@ import useTittle from '../../../Hooks/useTitle/useTittle';
 const ServicesDetails = () => {
   useTittle('(Service-Details) Blissfull_celebration');
   const { user } = useContext(AuthContext);
-  console.log(user);
   const axiosSecure = UseAxiosSecure();
   const params = useParams();
   const [open, setOpen] = useState(false);
@@ -51,8 +50,10 @@ const ServicesDetails = () => {
     providerImage,
     providerName,
   } = data;
+
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
+
   const buyerName = user?.displayName;
   const buyerEmail = user?.email;
   const buyerImage = user?.photoURL;
@@ -66,11 +67,10 @@ const ServicesDetails = () => {
     const status = 'pending';
 
     const purchaseInfo = {
-      serviceImg:imageURL,
+      serviceImg: imageURL,
       price,
       serviceName,
 
-      
       date,
       comment,
       status,
@@ -78,10 +78,9 @@ const ServicesDetails = () => {
       buyer: { buyerName, buyerEmail, buyerImage },
     };
     try {
-      const {data} = await axiosSecure.post('/booked-services', purchaseInfo);
-     await data?.insertedId && toast.success('posted successfully')
-     onCloseModal();
-
+      const { data } = await axiosSecure.post('/booked-services', purchaseInfo);
+      (await data?.insertedId) && toast.success('posted successfully');
+      onCloseModal();
     } catch (error) {
       toast.error(error?.message);
     }
@@ -91,7 +90,7 @@ const ServicesDetails = () => {
     <>
       <div>
         {/* -----------------------section heading ------------------ */}
-        <div className="text-center border p-10">
+        <div className="text-center  p-10">
           <h2 className="text-2xl font-bold">Service Overview</h2>
           <p className="text-gray-900">
             Welcome to our comprehensive service details! Here, you will find
@@ -100,73 +99,48 @@ const ServicesDetails = () => {
           </p>
         </div>
 
-        <div className="flex items-center justify-center">
-          <div className=" bg-white rounded-lg shadow-md dark:bg-gray-800">
-            <img
-              className="object-cover w-full h-64"
-              src={imageURL}
-              alt="Article"
-            />
-
-            <div className="p-6">
+        {/* details  container */}
+        <div>
+          <div className="flex items-stretch justify-between">
+            {/* iamge container  left wrapper*/}
+            <div className="w-1/2 h-full">
+              <img
+                className="object-cover w-full"
+                src={imageURL}
+                alt="Article"
+              />
+            </div>
+            {/* right wrapper */}
+            <div className="w-1/2 border border-blue-600 flex items-center justify-center">
+              {/* content wrapper */}
               <div>
-                <span className="text-white font-bold">
-                  Available : <span> {serviceArea} </span>
-                </span>
-
-                <div className="flex items-center justify-between text-white">
-                  <a
-                    href="#"
-                    className="block mt-2 text-xl font-semibold text-gray-800 transition-colors duration-300 transform dark:text-white hover:text-gray-600 hover:underline"
-                    tabIndex="0"
-                    role="link"
-                  >
-                    {serviceName}
-                  </a>
-                  <h2>
-                    <span className="text-xl font-bold text-blue-500">
-                      {price}
-                    </span>
-                    <span>$</span>
-                  </h2>
-                </div>
-
-                <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                  {description}
+                <h2 className="text-4xl font-bold font-playFair">
+                  {serviceName}
+                </h2>
+                <p className="my-5  font-bold">
+                  Start from
+                  <span className="text-blue-700 text-5xl mx-3"> {price}</span>$
+                </p>
+                <p>
+                  Available: <span className="font-bold">{serviceArea}</span>
                 </p>
               </div>
-
-              <div className="mt-4">
-                <div className="flex items-center justify-between">
-                  <div className="">
-                    <div className="flex items-center">
-                      <img
-                        className="object-cover h-10 rounded-full"
-                        src={providerImage}
-                        alt="Avatar"
-                      />
-                      <a
-                        href="#"
-                        className="mx-2 font-semibold text-gray-700 dark:text-gray-200"
-                        tabIndex="0"
-                        role="link"
-                      >
-                        {providerName}
-                      </a>
-                    </div>
-                  </div>
-
-                  <button className="btn" onClick={onOpenModal}>
-                    Book now
-                  </button>
-                </div>
-              </div>
             </div>
-
-            <div></div>
           </div>
+          <div>
+            <p className=" text-2xl p-10 bg-pink-100">{description}</p>
+          </div>
+
+          <div>
+            <span className='capitalize'>  provider informaion  </span>
+            <p>provider image </p>
+            <p>providedr name </p>
+            <p>provider email l</p>
+          </div>
+          <button className='btn'>  get now  </button>
         </div>
       </div>
+
       <div>
         <Modal open={open} onClose={onCloseModal} center>
           <h2 className="text-center text-xl my-5 capitalize">

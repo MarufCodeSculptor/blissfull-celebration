@@ -61,7 +61,7 @@ const AllServicesCard = ({ item }) => {
               to={`/service/${_id}`}
               className="text-blue-600 dark:text-blue-400 hover:underline"
             >
-              Read more
+              Details
             </Link>
           </div>
         </div>
