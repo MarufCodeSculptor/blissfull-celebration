@@ -100,10 +100,10 @@ const ServicesDetails = () => {
         </div>
 
         {/* details  container */}
-        <div>
-          <div className="flex items-stretch justify-between">
+        <div className="md:mb-20 shadow-xl">
+          <div className="flex flex-col md:flex-row items-stretch justify-between p-5">
             {/* iamge container  left wrapper*/}
-            <div className="w-1/2 h-full">
+            <div className="md:w-1/2 h-full">
               <img
                 className="object-cover w-full"
                 src={imageURL}
@@ -111,33 +111,66 @@ const ServicesDetails = () => {
               />
             </div>
             {/* right wrapper */}
-            <div className="w-1/2 border border-blue-600 flex items-center justify-center">
+            <div className="md:w-1/2 flex items-center justify-center">
               {/* content wrapper */}
-              <div>
-                <h2 className="text-4xl font-bold font-playFair">
+              <div className="md:p-5">
+                <h2 className="md:text-4xl text-2xl font-bold font-playFair">
                   {serviceName}
                 </h2>
-                <p className="my-5  font-bold">
+                <p className="my-5 font-bold">
                   Start from
-                  <span className="text-blue-700 text-5xl mx-3"> {price}</span>$
+                  <span className="text-blue-700  text-xl md:text-3xl  mx-3">
+                    {price}
+                  </span>
+                  $
                 </p>
-                <p>
-                  Available: <span className="font-bold">{serviceArea}</span>
+                <p className="text-xs md:text-base">
+                  Available at
+                  <span className="font-bold text-xs md:text-base mx-3">
+                    {serviceArea}
+                  </span>
                 </p>
+                <p className=" text-xs md:text-sm mt-2 ">{description}</p>
               </div>
             </div>
           </div>
-          <div>
-            <p className=" text-2xl p-10 bg-pink-100">{description}</p>
-          </div>
 
-          <div>
-            <span className='capitalize'>  provider informaion  </span>
-            <p>provider image </p>
-            <p>providedr name </p>
-            <p>provider email l</p>
+          <div className="p-5">
+            <h2 className="capitalize text-base font-semibold my-5">
+              Provider
+            </h2>
+            <div className="flex flex-row-reverse gap-3 justify-end ">
+              <div className="overflow-x-auto">
+                <table className="table">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <span className="text-2xl font-bold">
+                          {providerName}
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>{providerEmail}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div className="avatar ">
+                <div className="w-24 rounded">
+                  <img src={providerImage} alt="" />
+                </div>
+              </div>
+            </div>
+            <div className="my-5">
+              <button
+                className="btn w-full btn-primarys"
+                onClick={() => onOpenModal()}
+              >
+                Book Now
+              </button>
+            </div>
           </div>
-          <button className='btn'>  get now  </button>
         </div>
       </div>
 
